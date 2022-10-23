@@ -27,7 +27,7 @@ jobs:
     - name: Directory
       run: echo working-directory
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore Navigation.csproj
     - name: Build
       run: dotnet build --no-restore
     - name: Test
