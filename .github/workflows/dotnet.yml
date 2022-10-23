@@ -11,7 +11,7 @@ on:
     
 defaults:
  run:
-  working-directory: ../../Navigation!"§
+  working-directory: \Navigation
   
 jobs:
   build:
