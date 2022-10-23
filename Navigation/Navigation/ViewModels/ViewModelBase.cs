@@ -1,12 +1,11 @@
-﻿using System.ComponentModel;
+﻿using Navigation.Interfaces;
+using System.ComponentModel;
 
 namespace Navigation.ViewModels
 {
-    public class ViewModelBase : INotifyPropertyChanged
+    public abstract class ViewModelBase : IViewModel
     {
-        /// <summary>
-        /// Event welches ausgelößt wird falls sich eine Eigenschaft ändert
-        /// </summary>
+        /// <inheritdoc/>>
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>

@@ -4,7 +4,7 @@ using Navigation.ViewModels;
 namespace Navigation.Stores
 {
     /// <inheritdoc/>
-    public class NavigationStore : INavigationStore
+    public sealed class NavigationStore : INavigationStore
     {
         private ViewModelBase _currentViewModel;
 
