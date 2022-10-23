@@ -1,4 +1,6 @@
-﻿namespace Navigation.Interfaces
+﻿using Navigation.ViewModels;
+
+namespace Navigation.Interfaces
 {
     /// <summary>
     /// Ein Service der zur modalen Navigation verwendet wird

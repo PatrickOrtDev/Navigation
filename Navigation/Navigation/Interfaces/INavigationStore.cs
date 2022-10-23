@@ -1,5 +1,4 @@
-﻿using System;
-using Navigation.ViewModels;
+﻿using Navigation.ViewModels;
 
 namespace Navigation.Interfaces
 {

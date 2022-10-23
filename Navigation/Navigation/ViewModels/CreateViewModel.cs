@@ -1,6 +1,4 @@
-﻿using Navigation.ViewModels;
-
-namespace Navigation.ViewModels
+﻿namespace Navigation.ViewModels
 {
     /// <summary>
     /// Erstellt ein ViewModel
