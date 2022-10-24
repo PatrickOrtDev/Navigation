@@ -11,6 +11,6 @@ namespace Navigation.Interfaces
         /// Öffnet das ViewModel <typeparamref name="TViewModel"/> als View
         /// </summary>
         /// <typeparam name="TViewModel">Das ViewModel das geöffnet werde soll</typeparam>
-        void Open<TViewModel>() where TViewModel : ViewModelBase;
+        public void Open<TViewModel>() where TViewModel : ViewModelBase;
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Navigation.ViewModels;
-using System;
 
 namespace Navigation.Interfaces
 {
@@ -11,11 +10,11 @@ namespace Navigation.Interfaces
         /// <summary>
         /// Das aktuelle ViewModel
         /// </summary>
-        ViewModelBase CurrentViewModel { get; set; }
+        public ViewModelBase CurrentViewModel { get; set; }
 
         /// <summary>
         /// Wird ausgelößt, falls das aktuelle ViewModel sich ändert
         /// </summary>
-        event Action CurrentViewModelChanged;
+        public event Action CurrentViewModelChanged;
     }
 }
