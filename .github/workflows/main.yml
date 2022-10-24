@@ -1,0 +1,23 @@
+name: issue_board
+
+on:
+  issues:
+    types:
+      - opened
+      - labeled
+jobs:
+  add-to-project:
+    name: Add an issue to a board
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/add-to-project@main
+        with:
+          project-url: https://github.com/users/PatrickOrtDev/projects/2
+          github-token: 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
+          labeled: "Type: Enhancement"
+          label-operator: OR
+      - uses: actions/add-to-project@main
+        with:
+          project-url: https://github.com/users/PatrickOrtDev/projects/2
+          github-token: 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
+          labeled: "Type: Bug"
