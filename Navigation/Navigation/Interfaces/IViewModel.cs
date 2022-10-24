@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace Navigation.Interfaces
 {
@@ -13,6 +8,6 @@ namespace Navigation.Interfaces
         /// <summary>
         /// Die Dispose Methode des ViewModels
         /// </summary>
-        public void Dispose();
+        void Dispose();
     }
 }

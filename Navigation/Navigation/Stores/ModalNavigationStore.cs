@@ -1,5 +1,6 @@
 ﻿using Navigation.Interfaces;
 using Navigation.ViewModels;
+using System;
 
 namespace Navigation.Stores
 {
@@ -23,8 +24,7 @@ namespace Navigation.Stores
         /// <inheritdoc/>
         public bool IsOpen => CurrentViewModel != null;
 
-        /// <inheritdoc/>
-        public event Action CurrentViewModelChanged;
+        public event Action Navigation.Interfaces.IModalNavigationStore.CurrentViewModelChanged;
 
         /// <inheritdoc/>
         public void Close()

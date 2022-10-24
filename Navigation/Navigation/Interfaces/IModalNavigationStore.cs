@@ -1,4 +1,5 @@
 ﻿using Navigation.ViewModels;
+using System;
 
 namespace Navigation.Interfaces
 {
@@ -10,21 +11,22 @@ namespace Navigation.Interfaces
         /// <summary>
         /// Das aktuelle ViewModel
         /// </summary>
-        public ViewModelBase CurrentViewModel { get; set; }
+        ViewModelBase CurrentViewModel { get; set; }
 
         /// <summary>
         /// Gibt an ob eine modale View geöffnet ist
         /// </summary>
-        public bool IsOpen { get; }
+        bool IsOpen { get; }
 
         /// <summary>
         /// Schließt die modale View
         /// </summary>
-        public void Close();
+        void Close();
 
         /// <summary>
         /// Wird ausgelößt, falls das aktuelle ViewModel sich ändert
         /// </summary>
-        public event Action CurrentViewModelChanged;
+        event Action CurrentViewModelChanged;
+        event Action Navigation.Interfaces.IModalNavigationStore.CurrentViewModelChanged;
     }
 }
