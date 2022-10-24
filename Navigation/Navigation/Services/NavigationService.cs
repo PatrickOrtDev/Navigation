@@ -1,6 +1,7 @@
-﻿using Navigation.Interfaces;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Navigation.Interfaces;
 using Navigation.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Navigation.Services
 {

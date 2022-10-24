@@ -27,6 +27,5 @@ namespace Navigation.Interfaces
         /// Wird ausgelößt, falls das aktuelle ViewModel sich ändert
         /// </summary>
         event Action CurrentViewModelChanged;
-        event Action Navigation.Interfaces.IModalNavigationStore.CurrentViewModelChanged;
     }
 }
