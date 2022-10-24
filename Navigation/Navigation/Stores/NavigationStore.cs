@@ -1,6 +1,5 @@
 ﻿using Navigation.Interfaces;
 using Navigation.ViewModels;
-using System;
 
 namespace Navigation.Stores
 {
