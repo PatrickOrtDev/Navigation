@@ -9,10 +9,10 @@ using System.Windows.Media;
 
 namespace Navigation.Controls
 {
-    public  class ModalView : ContentControl
+    public  class ModalPresenter : ContentControl
     {
         public static readonly DependencyProperty IsOpenProperty =
-           DependencyProperty.Register("IsOpen", typeof(bool), typeof(ModalView),
+           DependencyProperty.Register("IsOpen", typeof(bool), typeof(ModalPresenter),
                new PropertyMetadata(false));
 
         public bool IsOpen
@@ -21,10 +21,10 @@ namespace Navigation.Controls
             set { SetValue(IsOpenProperty, value); }
         }
 
-        static ModalView()
+        static ModalPresenter()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(ModalView), new FrameworkPropertyMetadata(typeof(ModalView)));
-            BackgroundProperty.OverrideMetadata(typeof(ModalView), new FrameworkPropertyMetadata(CreateDefaultBackground()));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ModalPresenter), new FrameworkPropertyMetadata(typeof(ModalPresenter)));
+            BackgroundProperty.OverrideMetadata(typeof(ModalPresenter), new FrameworkPropertyMetadata(CreateDefaultBackground()));
         }
 
         private static object CreateDefaultBackground()
