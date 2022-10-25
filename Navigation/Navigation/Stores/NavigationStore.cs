@@ -7,10 +7,10 @@ namespace Navigation.Stores
     /// <inheritdoc/>
     public sealed class NavigationStore : INavigationStore
     {
-        private ViewModelBase _currentViewModel;
+        private IViewModel? _currentViewModel;
 
         /// <inheritdoc/>
-        public ViewModelBase CurrentViewModel
+        public IViewModel? CurrentViewModel
         {
             get => _currentViewModel;
             set

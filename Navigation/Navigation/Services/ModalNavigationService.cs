@@ -6,7 +6,7 @@ using System;
 namespace Navigation.Services
 {
     /// <inheritdoc/>
-    public class ModalNavigationService : IModalNavigationService
+    public sealed class ModalNavigationService : IModalNavigationService
     {
         private readonly IModalNavigationStore _navigationStore;
         private readonly IServiceProvider _service;
@@ -20,7 +20,7 @@ namespace Navigation.Services
         }
 
         /// <inheritdoc/>
-        public void Open<TViewModel>() where TViewModel : ViewModelBase
+        public void Open<TViewModel>() where TViewModel : IViewModel
         {
             _navigationStore.CurrentViewModel = _service.GetRequiredService<TViewModel>();
         }

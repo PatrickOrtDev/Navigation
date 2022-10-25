@@ -11,7 +11,7 @@ namespace Navigation.Interfaces
         /// <summary>
         /// Das aktuelle ViewModel
         /// </summary>
-        public ViewModelBase CurrentViewModel { get; set; }
+        public IViewModel? CurrentViewModel { get; set; }
 
         /// <summary>
         /// Wird ausgelößt, falls das aktuelle ViewModel sich ändert
