@@ -24,7 +24,7 @@ namespace Navigation.Stores
         public bool IsOpen => CurrentViewModel != null;
 
         /// <inheritdoc/>
-        public event Action CurrentViewModelChanged;
+        public event Action? CurrentViewModelChanged;
 
         /// <inheritdoc/>
         public void Close()

@@ -21,7 +21,7 @@ namespace Navigation.Stores
         }
 
         /// <inheritdoc/>
-        public event Action CurrentViewModelChanged;
+        public event Action? CurrentViewModelChanged;
 
         private void OnCurrentViewModelChanged()
         {
