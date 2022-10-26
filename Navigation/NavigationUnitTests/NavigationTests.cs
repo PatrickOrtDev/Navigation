@@ -12,10 +12,10 @@ namespace NavigationUnitTests
 {
     public class NavigationTests
     {
-        [Test]
-        public void RegisterMainViewModelDoesNotThrow()
-        {
+        //[Test]
+        //public void RegisterMainViewModelDoesNotThrow()
+        //{
             
-        }
+        //}
     }
 }
