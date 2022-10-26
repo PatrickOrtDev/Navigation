@@ -1,6 +1,5 @@
-﻿using Navigation.Interfaces;
-using Navigation.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Navigation.Interfaces;
 using System;
 
 namespace Navigation.Services
@@ -9,20 +8,20 @@ namespace Navigation.Services
     public sealed class ModalNavigationService : IModalNavigationService
     {
         private readonly IModalNavigationStore _navigationStore;
-        private readonly IServiceProvider _service;
+        private readonly IServiceProvider _serviceProvider;
 
         /// <inheritdoc/>
-        public ModalNavigationService(IModalNavigationStore navigationStore, IServiceProvider service)
+        public ModalNavigationService(IModalNavigationStore navigationStore, IServiceProvider serviceProvider)
         {
             _navigationStore = navigationStore;
-            _service = service;
+            _serviceProvider = serviceProvider;
 
         }
 
         /// <inheritdoc/>
-        public void Open<TViewModel>() where TViewModel : IViewModel
+        public void Open<TViewModel>() where TViewModel : INavigateViewModel
         {
-            _navigationStore.CurrentViewModel = _service.GetRequiredService<TViewModel>();
+            _navigationStore.CurrentViewModel = _serviceProvider.GetRequiredService<TViewModel>();
         }
 
         /// <inheritdoc/>

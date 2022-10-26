@@ -1,5 +1,4 @@
-﻿using Navigation.ViewModels;
-using System;
+﻿using System;
 
 namespace Navigation.Interfaces
 {
@@ -11,7 +10,7 @@ namespace Navigation.Interfaces
         /// <summary>
         /// Das aktuelle ViewModel
         /// </summary>
-        public IViewModel? CurrentViewModel { get; set; }
+        public INavigateViewModel? CurrentViewModel { get; set; }
 
         /// <summary>
         /// Gibt an ob eine modale View geöffnet ist

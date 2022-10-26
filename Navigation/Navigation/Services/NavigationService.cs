@@ -1,6 +1,5 @@
-﻿using Navigation.Interfaces;
-using Navigation.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Navigation.Interfaces;
 using System;
 
 namespace Navigation.Services
@@ -20,7 +19,7 @@ namespace Navigation.Services
         }
 
         /// <inheritdoc/>
-        public void Open<TViewModel>() where TViewModel : IViewModel
+        public void Open<TViewModel>() where TViewModel : INavigateViewModel
         {
             _navigationStore.CurrentViewModel = _service.GetRequiredService<TViewModel>();
         }

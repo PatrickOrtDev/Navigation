@@ -1,5 +1,4 @@
 ﻿using Navigation.Interfaces;
-using Navigation.ViewModels;
 using System;
 
 namespace Navigation.Stores
@@ -7,10 +6,10 @@ namespace Navigation.Stores
     /// <inheritdoc/>
     public sealed class NavigationStore : INavigationStore
     {
-        private IViewModel? _currentViewModel;
+        private INavigateViewModel? _currentViewModel;
 
         /// <inheritdoc/>
-        public IViewModel? CurrentViewModel
+        public INavigateViewModel? CurrentViewModel
         {
             get => _currentViewModel;
             set
