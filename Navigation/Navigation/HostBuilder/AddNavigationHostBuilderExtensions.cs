@@ -12,7 +12,7 @@ namespace Navigation.HostBuilder
 {
     public static class AddNavigationHostBuilderExtensions
     {
-        private static bool _mainViewModelIsSet;
+        private static bool _mainViewModelIsSet = false;
 
         public static IHostBuilder AddNavigationDefaults(this IHostBuilder host)
         {
@@ -40,6 +40,7 @@ namespace Navigation.HostBuilder
             {
                 throw new InvalidOperationException("You can't register two MainViewModels");
             }
+
             var servicesCollection = new ServiceCollection();
             servicesCollection.AddSingleton<TViewModel>();
             servicesCollection.AddSingleton(s => new TMainWindow()
@@ -52,6 +53,7 @@ namespace Navigation.HostBuilder
                 services.Add(servicesCollection);
             });
 
+            _mainViewModelIsSet = true;
             return host;
         }
 
