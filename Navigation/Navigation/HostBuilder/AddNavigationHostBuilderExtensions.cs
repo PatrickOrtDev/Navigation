@@ -5,15 +5,12 @@ using Navigation.Interfaces;
 using Navigation.Services;
 using Navigation.Stores;
 using System;
-using System.Collections.Generic;
 using System.Windows;
 
 namespace Navigation.HostBuilder
 {
     public static class AddNavigationHostBuilderExtensions
     {
-        private static bool _mainViewModelIsSet = false;
-
         public static IHostBuilder AddNavigationDefaults(this IHostBuilder host)
         {
             var servicesCollection = new ServiceCollection();
@@ -30,9 +27,9 @@ namespace Navigation.HostBuilder
         }
 
         /// <summary>
-        /// Registrirt das MainViewModel
+        /// Registers the MainViewModel
         /// </summary>
-        public static IHostBuilder RegisterMainViewModel<TViewModel, TMainWindow>(this IHostBuilder host) 
+        public static IHostBuilder RegisterMainViewModel<TViewModel, TMainWindow>(this IHostBuilder host)
         where TViewModel : class, INavigateViewModel
             where TMainWindow : Window, new()
         {
@@ -58,7 +55,32 @@ namespace Navigation.HostBuilder
         }
 
         /// <summary>
-        /// Registrirt das MainViewModel
+        /// Registers a ViewModel for Modal navigation
+        /// </summary>
+        public static IHostBuilder RegisterModalNavigationService<TViewModel>(this IHostBuilder host)
+          where TViewModel : class, INavigateViewModel
+        {
+            var servicesCollection = new ServiceCollection();
+            servicesCollection.AddTransient<TViewModel>();
+            servicesCollection.AddSingleton
+                (
+                    s => new ModalNavigationService
+                    (
+                        s.GetRequiredService<IModalNavigationStore>(),
+                        s
+                    )
+                );
+
+            host.ConfigureServices(services =>
+            {
+                services.Add(servicesCollection);
+            });
+
+            return host;
+        }
+
+        /// <summary>
+        /// Registers a ViewModel for modeless navigation
         /// </summary>
         public static IHostBuilder RegisterNavigationService<TViewModel>(this IHostBuilder host)
           where TViewModel : class, INavigateViewModel
@@ -82,29 +104,6 @@ namespace Navigation.HostBuilder
             return host;
         }
 
-        /// <summary>
-        /// Registrirt das MainViewModel
-        /// </summary>
-        public static IHostBuilder RegisterModalNavigationService<TViewModel>(this IHostBuilder host)
-          where TViewModel : class, INavigateViewModel
-        {
-            var servicesCollection = new ServiceCollection();
-            servicesCollection.AddTransient<TViewModel>();
-            servicesCollection.AddSingleton
-                (
-                    s => new ModalNavigationService
-                    (
-                        s.GetRequiredService<IModalNavigationStore>(),
-                        s
-                    )
-                );
-
-            host.ConfigureServices(services =>
-            {
-                services.Add(servicesCollection);
-            });
-
-            return host;
-        }
+        private static bool _mainViewModelIsSet = false;
     }
 }

@@ -14,6 +14,7 @@ namespace NavigationUnitTests
     public class HostBuilderTests
     {
         #region NavigationDefaults
+
         [Test]
         public void RegisterNavigationDefaultsDoesNotThrow()
         {
@@ -21,7 +22,7 @@ namespace NavigationUnitTests
                 .AddNavigationDefaults()
                 .Build();
             host.Start();
-            
+
             Assert.DoesNotThrow(() => host.Services.GetRequiredService<INavigationService>());
             Assert.DoesNotThrow(() => host.Services.GetRequiredService<IModalNavigationService>());
             Assert.DoesNotThrow(() => host.Services.GetRequiredService<INavigationStore>());
@@ -46,13 +47,17 @@ namespace NavigationUnitTests
             Assert.IsInstanceOf<NavigationStore>(navigationStore);
             Assert.IsInstanceOf<ModalNavigationStore>(modalNavigationStore);
         }
-        #endregion
+
+        #endregion NavigationDefaults
+
         #region MainViewModel
+
         [Test]
         [STAThread]
         public void RegisterMainViewModelDoesNotThrow()
         {
-            Thread thread = new Thread(() => {
+            Thread thread = new Thread(() =>
+            {
                 IHost host = Host.CreateDefaultBuilder()
                     .RegisterMainViewModel<ExampleViewModel, ExampleWindow>()
                     .Build();
@@ -69,7 +74,8 @@ namespace NavigationUnitTests
         [Test]
         public void RegisterMainViewModelResolveCorrectly()
         {
-            Thread thread = new Thread(() => {
+            Thread thread = new Thread(() =>
+            {
                 IHost host = Host.CreateDefaultBuilder()
                 .RegisterMainViewModel<ExampleViewModel, ExampleWindow>()
                 .Build();
@@ -88,7 +94,8 @@ namespace NavigationUnitTests
         [Test]
         public void RegisterMultipleMainViewModelDoesThrow()
         {
-            Thread thread = new Thread(() => {
+            Thread thread = new Thread(() =>
+            {
                 IHostBuilder host = Host.CreateDefaultBuilder()
                 .RegisterMainViewModel<ExampleViewModel, ExampleWindow>();
 
@@ -98,8 +105,11 @@ namespace NavigationUnitTests
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
         }
-        #endregion
+
+        #endregion MainViewModel
+
         #region NavigationService
+
         [Test]
         public void RegisterNavigationServiceDoesNotThrow()
         {
@@ -125,8 +135,11 @@ namespace NavigationUnitTests
 
             Assert.IsInstanceOf<ExampleViewModel>(exampleViewModel);
         }
-        #endregion
+
+        #endregion NavigationService
+
         #region ModalNavigationService
+
         [Test]
         public void RegisterModalNavigationServiceDoesNotThrow()
         {
@@ -152,6 +165,7 @@ namespace NavigationUnitTests
 
             Assert.IsInstanceOf<ExampleViewModel>(exampleViewModel);
         }
-        #endregion
+
+        #endregion ModalNavigationService
     }
 }

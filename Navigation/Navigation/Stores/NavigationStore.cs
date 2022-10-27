@@ -6,7 +6,8 @@ namespace Navigation.Stores
     /// <inheritdoc/>
     public sealed class NavigationStore : INavigationStore
     {
-        private INavigateViewModel? _currentViewModel;
+        /// <inheritdoc/>
+        public event Action? CurrentViewModelChanged;
 
         /// <inheritdoc/>
         public INavigateViewModel? CurrentViewModel
@@ -20,8 +21,7 @@ namespace Navigation.Stores
             }
         }
 
-        /// <inheritdoc/>
-        public event Action? CurrentViewModelChanged;
+        private INavigateViewModel? _currentViewModel;
 
         private void OnCurrentViewModelChanged()
         {

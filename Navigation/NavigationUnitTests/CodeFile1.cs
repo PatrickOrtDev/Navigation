@@ -71,8 +71,7 @@ namespace Composite.RealWorld
 
         public override void Add(DrawingElement c)
         {
-            Console.WriteLine(
-                "Cannot add to a PrimitiveElement");
+            Console.WriteLine("Cannot add to a PrimitiveElement");
         }
 
         public override void Display(int indent)

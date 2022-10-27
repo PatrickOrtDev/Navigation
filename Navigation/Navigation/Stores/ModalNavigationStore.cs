@@ -6,7 +6,8 @@ namespace Navigation.Stores
     /// <inheritdoc/>
     public sealed class ModalNavigationStore : IModalNavigationStore
     {
-        private INavigateViewModel? _currentViewModel;
+        /// <inheritdoc/>
+        public event Action? CurrentViewModelChanged;
 
         /// <inheritdoc/>
         public INavigateViewModel? CurrentViewModel
@@ -24,13 +25,12 @@ namespace Navigation.Stores
         public bool IsOpen => CurrentViewModel != null;
 
         /// <inheritdoc/>
-        public event Action? CurrentViewModelChanged;
-
-        /// <inheritdoc/>
         public void Close()
         {
             CurrentViewModel = null;
         }
+
+        private INavigateViewModel? _currentViewModel;
 
         private void OnCurrentViewModelChanged()
         {

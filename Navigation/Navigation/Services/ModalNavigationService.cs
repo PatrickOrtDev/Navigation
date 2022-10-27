@@ -7,15 +7,17 @@ namespace Navigation.Services
     /// <inheritdoc/>
     public sealed class ModalNavigationService : IModalNavigationService
     {
-        private readonly IModalNavigationStore _navigationStore;
-        private readonly IServiceProvider _serviceProvider;
-
         /// <inheritdoc/>
         public ModalNavigationService(IModalNavigationStore navigationStore, IServiceProvider serviceProvider)
         {
             _navigationStore = navigationStore;
             _serviceProvider = serviceProvider;
+        }
 
+        /// <inheritdoc/>
+        public void CloseModal()
+        {
+            _navigationStore.Close();
         }
 
         /// <inheritdoc/>
@@ -24,10 +26,7 @@ namespace Navigation.Services
             _navigationStore.CurrentViewModel = _serviceProvider.GetRequiredService<TViewModel>();
         }
 
-        /// <inheritdoc/>
-        public void CloseModal()
-        {
-            _navigationStore.Close();
-        }
+        private readonly IModalNavigationStore _navigationStore;
+        private readonly IServiceProvider _serviceProvider;
     }
 }

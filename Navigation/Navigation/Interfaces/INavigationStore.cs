@@ -3,18 +3,18 @@
 namespace Navigation.Interfaces
 {
     /// <summary>
-    /// Managed die Navigation von Views
+    /// Stores the active ViewModel for navigation
     /// </summary>
     public interface INavigationStore
     {
         /// <summary>
-        /// Das aktuelle ViewModel
-        /// </summary>
-        public INavigateViewModel? CurrentViewModel { get; set; }
-
-        /// <summary>
-        /// Wird ausgelößt, falls das aktuelle ViewModel sich ändert
+        /// Triggered if the current ViewModel changes
         /// </summary>
         public event Action CurrentViewModelChanged;
+
+        /// <summary>
+        /// The current ViewModel
+        /// </summary>
+        public INavigateViewModel? CurrentViewModel { get; set; }
     }
 }

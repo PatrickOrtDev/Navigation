@@ -7,15 +7,11 @@ namespace Navigation.Services
     /// <inheritdoc/>
     public sealed class NavigationService : INavigationService
     {
-        private readonly INavigationStore _navigationStore;
-        private readonly IServiceProvider _service;
-
         /// <inheritdoc/>
         public NavigationService(INavigationStore navigationStore, IServiceProvider service)
         {
             _navigationStore = navigationStore;
             _service = service;
-
         }
 
         /// <inheritdoc/>
@@ -23,5 +19,8 @@ namespace Navigation.Services
         {
             _navigationStore.CurrentViewModel = _service.GetRequiredService<TViewModel>();
         }
+
+        private readonly INavigationStore _navigationStore;
+        private readonly IServiceProvider _service;
     }
 }

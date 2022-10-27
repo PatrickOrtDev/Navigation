@@ -10,16 +10,16 @@ namespace Navigation.Controls
            DependencyProperty.Register("IsOpen", typeof(bool), typeof(ModalPresenter),
                new PropertyMetadata(false));
 
-        public bool IsOpen
-        {
-            get { return (bool)GetValue(IsOpenProperty); }
-            set { SetValue(IsOpenProperty, value); }
-        }
-
         static ModalPresenter()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ModalPresenter), new FrameworkPropertyMetadata(typeof(ModalPresenter)));
             BackgroundProperty.OverrideMetadata(typeof(ModalPresenter), new FrameworkPropertyMetadata(CreateDefaultBackground()));
+        }
+
+        public bool IsOpen
+        {
+            get { return (bool)GetValue(IsOpenProperty); }
+            set { SetValue(IsOpenProperty, value); }
         }
 
         private static object CreateDefaultBackground()
