@@ -1,9 +1,7 @@
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using LightInject;
 using Navigation.HostBuilder;
 using Navigation.Interfaces;
 using Navigation.Services;
-using Navigation.Stores;
 using NavigationUnitTests.HelperClasses;
 using NUnit.Framework;
 using System;
@@ -15,157 +13,122 @@ namespace NavigationUnitTests
     {
         #region NavigationDefaults
 
+        [Apartment(ApartmentState.STA)]
         [Test]
-        public void RegisterNavigationDefaultsDoesNotThrow()
+        public void RegisterMainViewModelAndResolveCorrectly()
         {
-            IHost host = Host.CreateDefaultBuilder()
-                .AddNavigationDefaults()
-                .Build();
-            host.Start();
+            ServiceContainer container = new ServiceContainer();
+            container.RegisterNavigation<ExampleWindow, IExampleViewModel>(typeof(ExampleWindow).Assembly);
 
-            Assert.DoesNotThrow(() => host.Services.GetRequiredService<INavigationService>());
-            Assert.DoesNotThrow(() => host.Services.GetRequiredService<IModalNavigationService>());
-            Assert.DoesNotThrow(() => host.Services.GetRequiredService<INavigationStore>());
-            Assert.DoesNotThrow(() => host.Services.GetRequiredService<IModalNavigationStore>());
+            Assert.DoesNotThrow(() => container.GetInstance<ExampleWindow>());
+            Assert.IsInstanceOf<ExampleWindow>(container.GetInstance<ExampleWindow>());
         }
 
-        [Test]
-        public void RegisterNavigationDefaultsResolveCorrectly()
-        {
-            IHost host = Host.CreateDefaultBuilder()
-                .AddNavigationDefaults()
-                .Build();
-            host.Start();
-
-            var navigationService = host.Services.GetRequiredService<INavigationService>();
-            var modalNavigationService = host.Services.GetRequiredService<IModalNavigationService>();
-            var navigationStore = host.Services.GetRequiredService<INavigationStore>();
-            var modalNavigationStore = host.Services.GetRequiredService<IModalNavigationStore>();
-
-            Assert.IsInstanceOf<NavigationService>(navigationService);
-            Assert.IsInstanceOf<ModalNavigationService>(modalNavigationService);
-            Assert.IsInstanceOf<NavigationStore>(navigationStore);
-            Assert.IsInstanceOf<ModalNavigationStore>(modalNavigationStore);
-        }
-
-        #endregion NavigationDefaults
-
-        #region MainViewModel
-
-        [Test]
-        [STAThread]
-        public void RegisterMainViewModelDoesNotThrow()
-        {
-            Thread thread = new Thread(() =>
-            {
-                IHost host = Host.CreateDefaultBuilder()
-                    .RegisterMainViewModel<ExampleViewModel, ExampleWindow>()
-                    .Build();
-                host.Start();
-
-                Assert.DoesNotThrow(() => host.Services.GetRequiredService<ExampleWindow>());
-            });
-
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-        }
-
-        [STAThread]
-        [Test]
-        public void RegisterMainViewModelResolveCorrectly()
-        {
-            Thread thread = new Thread(() =>
-            {
-                IHost host = Host.CreateDefaultBuilder()
-                .RegisterMainViewModel<ExampleViewModel, ExampleWindow>()
-                .Build();
-                host.Start();
-
-                var navigationService = host.Services.GetRequiredService<ExampleWindow>();
-
-                Assert.IsInstanceOf<NavigationService>(navigationService);
-            });
-
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-        }
-
-        [STAThread]
+        //[STAThread]
         [Test]
         public void RegisterMultipleMainViewModelDoesThrow()
         {
             Thread thread = new Thread(() =>
             {
-                IHostBuilder host = Host.CreateDefaultBuilder()
-                .RegisterMainViewModel<ExampleViewModel, ExampleWindow>();
+                ServiceContainer container = new ServiceContainer();
+                container.RegisterNavigation<ExampleWindow, IExampleViewModel>(typeof(ExampleWindow).Assembly);
 
-                Assert.Throws<InvalidOperationException>(() => host.RegisterMainViewModel<ExampleViewModel, ExampleWindow>());
+                Assert.Throws<InvalidOperationException>(() => container.RegisterNavigation<ExampleWindow, IExampleViewModel>(typeof(ExampleWindow).Assembly));
             });
 
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
         }
 
-        #endregion MainViewModel
-
-        #region NavigationService
-
+        [Apartment(ApartmentState.STA)]
         [Test]
-        public void RegisterNavigationServiceDoesNotThrow()
+        public void RegisterNavigationAndResolveCorrectly()
         {
-            IHost host = Host.CreateDefaultBuilder()
-                .AddNavigationDefaults()
-                .RegisterNavigationService<ExampleViewModel>()
-                .Build();
-            host.Start();
+            ServiceContainer container = new ServiceContainer().RegisterNavigation<ExampleWindow, IExampleViewModel>(typeof(ExampleWindow).Assembly);
+            container.RegisterAssembly(typeof(INavigateViewModel).Assembly);
 
-            Assert.DoesNotThrow(() => host.Services.GetRequiredService<ExampleViewModel>());
+            Assert.IsInstanceOf<NavigationService<IExampleViewModel>>(container.GetInstance<INavigationService<IExampleViewModel>>());
         }
 
         [Test]
-        public void RegisterNavigationServiceResolveCorrectly()
+        public void RegisterNavigationDefaultsDoesNotThrow()
         {
-            IHost host = Host.CreateDefaultBuilder()
-                .AddNavigationDefaults()
-                .RegisterNavigationService<ExampleViewModel>()
-                .Build();
-            host.Start();
+            Thread thread = new Thread(() =>
+            {
+                ServiceContainer container = new ServiceContainer().RegisterNavigation<ExampleWindow, IExampleViewModel>(typeof(ExampleWindow).Assembly);
+                container.RegisterAssembly(typeof(INavigateViewModel).Assembly);
 
-            var exampleViewModel = host.Services.GetRequiredService<ExampleViewModel>();
+                Assert.DoesNotThrow(() => container.GetInstance<INavigationService<IExampleViewModel>>());
+                Assert.DoesNotThrow(() => container.GetInstance<INavigationStore>());
+            });
 
-            Assert.IsInstanceOf<ExampleViewModel>(exampleViewModel);
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
         }
 
-        #endregion NavigationService
+        //#endregion NavigationDefaults
 
-        #region ModalNavigationService
+        //#region MainViewModel
+        //#endregion MainViewModel
 
-        [Test]
-        public void RegisterModalNavigationServiceDoesNotThrow()
-        {
-            IHost host = Host.CreateDefaultBuilder()
-                .AddNavigationDefaults()
-                .RegisterNavigationService<ExampleViewModel>()
-                .Build();
-            host.Start();
+        //#region NavigationService
 
-            Assert.DoesNotThrow(() => host.Services.GetRequiredService<ExampleViewModel>());
-        }
+        //[Test]
+        //public void RegisterNavigationServiceDoesNotThrow()
+        //{
+        //    IHost host = Host.CreateDefaultBuilder()
+        //        .AddNavigationDefaults()
+        //        .RegisterNavigationService<ExampleViewModel>()
+        //        .Build();
+        //    host.Start();
 
-        [Test]
-        public void RegisterModalNavigationServiceResolveCorrectly()
-        {
-            IHost host = Host.CreateDefaultBuilder()
-                .AddNavigationDefaults()
-                .RegisterNavigationService<ExampleViewModel>()
-                .Build();
-            host.Start();
+        //    Assert.DoesNotThrow(() => host.Services.GetRequiredService<ExampleViewModel>());
+        //}
 
-            var exampleViewModel = host.Services.GetRequiredService<ExampleViewModel>();
+        //[Test]
+        //public void RegisterNavigationServiceResolveCorrectly()
+        //{
+        //    IHost host = Host.CreateDefaultBuilder()
+        //        .AddNavigationDefaults()
+        //        .RegisterNavigationService<ExampleViewModel>()
+        //        .Build();
+        //    host.Start();
 
-            Assert.IsInstanceOf<ExampleViewModel>(exampleViewModel);
-        }
+        //    var exampleViewModel = host.Services.GetRequiredService<ExampleViewModel>();
 
-        #endregion ModalNavigationService
+        //    Assert.IsInstanceOf<ExampleViewModel>(exampleViewModel);
+        //}
+
+        //#endregion NavigationService
+
+        //#region ModalNavigationService
+
+        //[Test]
+        //public void RegisterModalNavigationServiceDoesNotThrow()
+        //{
+        //    IHost host = Host.CreateDefaultBuilder()
+        //        .AddNavigationDefaults()
+        //        .RegisterNavigationService<ExampleViewModel>()
+        //        .Build();
+        //    host.Start();
+
+        //    Assert.DoesNotThrow(() => host.Services.GetRequiredService<ExampleViewModel>());
+        //}
+
+        //[Test]
+        //public void RegisterModalNavigationServiceResolveCorrectly()
+        //{
+        //    IHost host = Host.CreateDefaultBuilder()
+        //        .AddNavigationDefaults()
+        //        .RegisterNavigationService<ExampleViewModel>()
+        //        .Build();
+        //    host.Start();
+
+        //    var exampleViewModel = host.Services.GetRequiredService<ExampleViewModel>();
+
+        //    Assert.IsInstanceOf<ExampleViewModel>(exampleViewModel);
+        //}
+
+        #endregion NavigationDefaults
     }
 }

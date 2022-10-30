@@ -7,11 +7,7 @@ using System.Threading.Tasks;
 
 namespace NavigationUnitTests.HelperClasses
 {
-    internal class ExampleViewModel : IExampleViewModel
+    internal interface IExampleViewModel : INavigateViewModel
     {
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

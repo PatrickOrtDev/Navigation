@@ -16,6 +16,12 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Interfaces\IModalNavigationService.cs" />
+    <Compile Remove="Interfaces\IModalNavigationStore.cs" />
+    <Compile Remove="Services\ModalNavigationService.cs" />
+    <Compile Remove="Stores\ModalNavigationStore.cs" />
+  </ItemGroup>
 	
   <ItemGroup>
     <PackageReference Include="LightInject" Version="6.6.1" />
