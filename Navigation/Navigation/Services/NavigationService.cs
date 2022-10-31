@@ -1,5 +1,4 @@
-﻿using LightInject;
-using Navigation.Interfaces;
+﻿using Navigation.Interfaces;
 using System;
 
 namespace Navigation.Services
@@ -15,10 +14,6 @@ namespace Navigation.Services
             _viewModelFactory = viewModelFactory;
         }
 
-        public NavigationService(INavigationStore navigationStore, IModalNavigationStore modalNavigationStore, object v, (IServiceFactory, object) p)
-        {
-        }
-
         /// <inheritdoc/>
         public void Open<TViewModel>()
             where TViewModel : INavigateViewModel
@@ -26,6 +21,14 @@ namespace Navigation.Services
             var viewModel = _viewModelFactory(typeof(TViewModel));
 
             _navigationStore.CurrentViewModel = viewModel;
+        }
+
+        public void OpenModal<TViewModel>()
+            where TViewModel : INavigateViewModel
+        {
+            var viewModel = _viewModelFactory(typeof(TViewModel));
+
+            _modalNavigationStore.CurrentViewModel = viewModel;
         }
 
         private readonly IModalNavigationStore _modalNavigationStore;

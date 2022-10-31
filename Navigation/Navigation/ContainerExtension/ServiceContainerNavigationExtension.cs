@@ -5,33 +5,35 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 
-namespace Navigation.HostBuilder
+namespace Navigation.ContainerExtension
 {
     public static class ServiceContainerNavigationExtension
     {
         /// <summary>
-        /// Eine Extension für den <see cref="ServiceContainer"/> mit der man für die Navigation das MainWindow, das MainViewModel
-        /// und alle weiteren ViewModels die für die Navigation genutzt wird regestriert werden.
+        /// An extension for the <see cref="ServiceContainer"/> with which you can register the MainWindow, the MainViewModel
+        /// and all other ViewModels used for navigation.
         /// </summary>
-        /// <typeparam name="TMainWindow">Das MainWindow</typeparam>
-        /// <typeparam name="TMainViewModel">Das MainViewModel</typeparam>
-        /// <param name="container">Der ServiceContainer</param>
-        /// <param name="viewModelAssembly">Die Assembly mit den ViewModels die für die Navigation regestriert werden</param>
-        /// <returns>Den ServiceContainer mit den weiteren Services</returns>
-        /// <exception cref="InvalidOperationException">Falls der Aufruf öfter als ein mal stattfindet</exception>
+        /// <typeparam name="TMainWindow">The MainWindow</typeparam>.
+        /// <typeparam name="TMainViewModel">The MainViewModel</typeparam>.
+        /// <param name="container">The ServiceContainer</param>.
+        /// <returns>The ServiceContainer with the other services</returns>.
+        /// <exception cref="InvalidOperationException">Triggered if the call occurs more than once</exception>.
         public static ServiceContainer RegisterNavigation<TMainWindow, TMainViewModel>(this ServiceContainer container)
             where TMainWindow : Window, new()
             where TMainViewModel : INavigateViewModel
         {
             if (_mainViewModelIsSet)
             {
-                throw new InvalidOperationException("You can't register two MainViewModels");
+                throw new InvalidOperationException("Navigation may only be registered once");
             }
 
-            // Alle ViewModels mit dem Typen INavigateViewModel aus der übergebenden Assambly registrieren
+            // Register all ViewModels with the type INavigateViewModel from the passing assembly of the MainViewModel.
             container.RegisterAssembly(typeof(TMainViewModel).Assembly, (serviceType, implementigType) => RegisterPattern((TypeInfo)serviceType, (TypeInfo)implementigType));
 
-            //MainViewModel regestrieren
+            //Default services
+            container.RegisterFrom<CompostionRoot>();
+
+            //MainViewModel
             container.RegisterSingleton(s => new TMainWindow()
             {
                 DataContext = s.GetInstance<TMainViewModel>()
@@ -47,6 +49,7 @@ namespace Navigation.HostBuilder
         {
             bool implementingTypeBool = implementigType.ImplementedInterfaces.Any(interFace => interFace.Name.Equals(nameof(INavigateViewModel))) &&
                 implementigType.IsClass;
+
             bool serviceTypeBool = serviceType.ImplementedInterfaces.Any(interFace => interFace.Name.Equals(nameof(INavigateViewModel))) &&
                 serviceType.IsInterface;
 

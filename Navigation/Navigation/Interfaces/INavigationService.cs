@@ -11,5 +11,8 @@
         /// <typeparam name="TViewModel">The ViewModel to be opened</typeparam>
         public void Open<TViewModel>()
         where TViewModel : INavigateViewModel;
+
+        public void OpenModal<TViewModel>()
+            where TViewModel : INavigateViewModel;
     }
 }

@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace NavigationUnitTests.HelperClasses
 {
-    internal class ExampleWindow : Window
+    internal class MainExampleWindow : Window
     {
     }
 }

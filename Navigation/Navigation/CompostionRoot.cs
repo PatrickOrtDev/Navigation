@@ -3,31 +3,22 @@ using Navigation.Interfaces;
 using Navigation.Services;
 using Navigation.Stores;
 using System;
+using System.Linq;
+using System.Reflection;
 
 namespace Navigation
 {
     public class CompostionRoot : ICompositionRoot
     {
+        //Registers default services of navigation
         public void Compose(IServiceRegistry serviceRegistry)
         {
-            //MainWindow
-
+            //Register function for getting Instance of INavigateViewModel
             serviceRegistry.Register<Func<Type, INavigateViewModel>>((factory) => (type) => (INavigateViewModel)factory.GetInstance(type));
 
             serviceRegistry.RegisterSingleton<INavigationStore, NavigationStore>();
-            serviceRegistry.RegisterSingleton<INavigationService>(factory => Facory(factory));
+            serviceRegistry.RegisterSingleton<INavigationService, NavigationService>();
             serviceRegistry.RegisterSingleton<IModalNavigationStore, ModalNavigationStore>();
-        }
-
-        private NavigationService Facory(IServiceFactory factory)
-        {
-            var tes = factory.GetAllInstances<INavigateViewModel>();
-            return new NavigationService
-                (
-                factory.GetInstance<INavigationStore>(),
-                factory.GetInstance<IModalNavigationStore>(),
-                factory.GetInstance<Func<Type, INavigateViewModel>>()
-                ); ;
         }
     }
 }

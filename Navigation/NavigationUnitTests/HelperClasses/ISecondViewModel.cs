@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NavigationUnitTests.HelperClasses
 {
-    internal interface IExampleViewModelChild : INavigateViewModel
+    internal interface ISecondViewModel : INavigateViewModel
     {
     }
 }
