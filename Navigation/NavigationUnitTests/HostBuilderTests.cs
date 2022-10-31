@@ -47,7 +47,7 @@ namespace NavigationUnitTests
             ServiceContainer container = new ServiceContainer().RegisterNavigation<ExampleWindow, IExampleViewModel>(typeof(ExampleWindow).Assembly);
             container.RegisterAssembly(typeof(INavigateViewModel).Assembly);
 
-            Assert.IsInstanceOf<NavigationService<IExampleViewModel>>(container.GetInstance<INavigationService<IExampleViewModel>>());
+            Assert.IsInstanceOf<NavigationService>(container.GetInstance<INavigationService>());
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace NavigationUnitTests
                 ServiceContainer container = new ServiceContainer().RegisterNavigation<ExampleWindow, IExampleViewModel>(typeof(ExampleWindow).Assembly);
                 container.RegisterAssembly(typeof(INavigateViewModel).Assembly);
 
-                Assert.DoesNotThrow(() => container.GetInstance<INavigationService<IExampleViewModel>>());
+                Assert.DoesNotThrow(() => container.GetInstance<INavigationService>());
                 Assert.DoesNotThrow(() => container.GetInstance<INavigationStore>());
             });
 

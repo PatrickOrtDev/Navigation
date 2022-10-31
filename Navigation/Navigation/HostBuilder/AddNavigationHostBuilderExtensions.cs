@@ -1,12 +1,6 @@
 ﻿using LightInject;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Hosting;
 using Navigation.Interfaces;
-using Navigation.Services;
-using Navigation.Stores;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -15,7 +9,17 @@ namespace Navigation.HostBuilder
 {
     public static class AddNavigationHostBuilderExtensions
     {
-        public static ServiceContainer RegisterNavigation<TMainWindow, TMainViewModel>(this ServiceContainer registry, Assembly viewModelAssembly)
+        /// <summary>
+        /// Eine Extension für den <see cref="ServiceContainer"/> mit der man für die Navigation das MainWindow, das MainViewModel
+        /// und alle weiteren ViewModels die für die Navigation genutzt wird regestriert werden.
+        /// </summary>
+        /// <typeparam name="TMainWindow">Das MainWindow</typeparam>
+        /// <typeparam name="TMainViewModel">Das MainViewModel</typeparam>
+        /// <param name="container">Der ServiceContainer</param>
+        /// <param name="viewModelAssembly">Die Assembly mit den ViewModels die für die Navigation regestriert werden</param>
+        /// <returns>Den ServiceContainer mit den weiteren Services</returns>
+        /// <exception cref="InvalidOperationException">Falls der Aufruf öfter als ein mal stattfindet</exception>
+        public static ServiceContainer RegisterNavigation<TMainWindow, TMainViewModel>(this ServiceContainer container, Assembly viewModelAssembly)
             where TMainWindow : Window, new()
             where TMainViewModel : INavigateViewModel
         {
@@ -25,16 +29,16 @@ namespace Navigation.HostBuilder
             }
 
             // Alle ViewModels mit dem Typen INavigateViewModel aus der übergebenden Assambly registrieren
-            registry.RegisterAssembly(viewModelAssembly, (serviceType, implementigType) => RegisterPattern((TypeInfo)serviceType, (TypeInfo)implementigType));
+            container.RegisterAssembly(viewModelAssembly, (serviceType, implementigType) => RegisterPattern((TypeInfo)serviceType, (TypeInfo)implementigType));
 
             //MainViewModel regestrieren
-            registry.RegisterSingleton(s => new TMainWindow()
+            container.RegisterSingleton(s => new TMainWindow()
             {
                 DataContext = s.GetInstance<TMainViewModel>()
-            });
+            }); ;
 
             _mainViewModelIsSet = true;
-            return registry;
+            return container;
         }
 
         private static bool _mainViewModelIsSet = false;
@@ -43,7 +47,8 @@ namespace Navigation.HostBuilder
         {
             bool implementingTypeBool = implementigType.ImplementedInterfaces.Any(interFace => interFace.Name.Equals(nameof(INavigateViewModel))) &&
                 implementigType.IsClass;
-            bool serviceTypeBool = serviceType.ImplementedInterfaces.Any(interFace => interFace.Name.Equals(nameof(INavigateViewModel)));
+            bool serviceTypeBool = serviceType.ImplementedInterfaces.Any(interFace => interFace.Name.Equals(nameof(INavigateViewModel))) &&
+                serviceType.IsInterface;
 
             return implementingTypeBool && serviceTypeBool;
         }

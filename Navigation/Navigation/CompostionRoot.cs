@@ -3,10 +3,7 @@ using Navigation.Interfaces;
 using Navigation.Services;
 using Navigation.Stores;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 
 namespace Navigation
 {
@@ -19,8 +16,23 @@ namespace Navigation
             //serviceRegistry.RegisterAssembly(typeof(IViewModelBase), (serviceType, implementigType) => serviceType.IsInstanceOfType(typeof(INavigateViewModel)));
 
             //Registriere die Services und Stores
+            //serviceRegistry.RegisterTransient(typeof(IViewModelFactory<>), typeof(ViewModelFactory<>));
+            serviceRegistry.Register<Func<Type, INavigateViewModel>>((factory) => (type) => (INavigateViewModel)factory.GetInstance(type));
+
             serviceRegistry.RegisterSingleton<INavigationStore, NavigationStore>();
-            serviceRegistry.RegisterSingleton(typeof(INavigationService<>), typeof(NavigationService<>));
+            serviceRegistry.RegisterSingleton<INavigationService>(factory => Facory(factory));
+            serviceRegistry.RegisterSingleton<IModalNavigationStore, ModalNavigationStore>();
+        }
+
+        private NavigationService Facory(IServiceFactory factory)
+        {
+            var tes = factory.GetAllInstances<INavigateViewModel>();
+            return new NavigationService
+                (
+                factory.GetInstance<INavigationStore>(),
+                factory.GetInstance<IModalNavigationStore>(),
+                factory.GetInstance<Func<Type, INavigateViewModel>>()
+                ); ;
         }
     }
 }
