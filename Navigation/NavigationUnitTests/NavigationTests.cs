@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 
 namespace NavigationUnitTests
 {
+    [SingleThreadedAttribute]
     public class NavigationTests
     {
         [Apartment(ApartmentState.STA)]

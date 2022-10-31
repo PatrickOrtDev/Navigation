@@ -6,6 +6,7 @@ using System.Threading;
 
 namespace NavigationUnitTests
 {
+    [SingleThreadedAttribute]
     public class ModalNavigationTests
     {
         [Apartment(ApartmentState.STA)]

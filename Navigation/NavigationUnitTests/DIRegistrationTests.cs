@@ -11,6 +11,7 @@ using System.Threading;
 
 namespace NavigationUnitTests
 {
+    [SingleThreadedAttribute]
     public class DIRegistrationTests
     {
         [Apartment(ApartmentState.STA)]
