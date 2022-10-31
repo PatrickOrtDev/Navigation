@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace Navigation.HostBuilder
 {
-    public static class AddNavigationHostBuilderExtensions
+    public static class ServiceContainerNavigationExtension
     {
         /// <summary>
         /// Eine Extension für den <see cref="ServiceContainer"/> mit der man für die Navigation das MainWindow, das MainViewModel
@@ -19,7 +19,7 @@ namespace Navigation.HostBuilder
         /// <param name="viewModelAssembly">Die Assembly mit den ViewModels die für die Navigation regestriert werden</param>
         /// <returns>Den ServiceContainer mit den weiteren Services</returns>
         /// <exception cref="InvalidOperationException">Falls der Aufruf öfter als ein mal stattfindet</exception>
-        public static ServiceContainer RegisterNavigation<TMainWindow, TMainViewModel>(this ServiceContainer container, Assembly viewModelAssembly)
+        public static ServiceContainer RegisterNavigation<TMainWindow, TMainViewModel>(this ServiceContainer container)
             where TMainWindow : Window, new()
             where TMainViewModel : INavigateViewModel
         {
@@ -29,7 +29,7 @@ namespace Navigation.HostBuilder
             }
 
             // Alle ViewModels mit dem Typen INavigateViewModel aus der übergebenden Assambly registrieren
-            container.RegisterAssembly(viewModelAssembly, (serviceType, implementigType) => RegisterPattern((TypeInfo)serviceType, (TypeInfo)implementigType));
+            container.RegisterAssembly(typeof(TMainViewModel).Assembly, (serviceType, implementigType) => RegisterPattern((TypeInfo)serviceType, (TypeInfo)implementigType));
 
             //MainViewModel regestrieren
             container.RegisterSingleton(s => new TMainWindow()

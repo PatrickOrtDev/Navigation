@@ -18,7 +18,7 @@ namespace NavigationUnitTests
         public void RegisterMainViewModelAndResolveCorrectly()
         {
             ServiceContainer container = new ServiceContainer();
-            container.RegisterNavigation<ExampleWindow, IExampleViewModel>(typeof(ExampleWindow).Assembly);
+            container.RegisterNavigation<ExampleWindow, IExampleViewModel>();
 
             Assert.DoesNotThrow(() => container.GetInstance<ExampleWindow>());
             Assert.IsInstanceOf<ExampleWindow>(container.GetInstance<ExampleWindow>());
@@ -31,9 +31,9 @@ namespace NavigationUnitTests
             Thread thread = new Thread(() =>
             {
                 ServiceContainer container = new ServiceContainer();
-                container.RegisterNavigation<ExampleWindow, IExampleViewModel>(typeof(ExampleWindow).Assembly);
+                container.RegisterNavigation<ExampleWindow, IExampleViewModel>();
 
-                Assert.Throws<InvalidOperationException>(() => container.RegisterNavigation<ExampleWindow, IExampleViewModel>(typeof(ExampleWindow).Assembly));
+                Assert.Throws<InvalidOperationException>(() => container.RegisterNavigation<ExampleWindow, IExampleViewModel>());
             });
 
             thread.SetApartmentState(ApartmentState.STA);
@@ -44,7 +44,7 @@ namespace NavigationUnitTests
         [Test]
         public void RegisterNavigationAndResolveCorrectly()
         {
-            ServiceContainer container = new ServiceContainer().RegisterNavigation<ExampleWindow, IExampleViewModel>(typeof(ExampleWindow).Assembly);
+            ServiceContainer container = new ServiceContainer().RegisterNavigation<ExampleWindow, IExampleViewModel>();
             container.RegisterAssembly(typeof(INavigateViewModel).Assembly);
 
             Assert.IsInstanceOf<NavigationService>(container.GetInstance<INavigationService>());
@@ -55,7 +55,7 @@ namespace NavigationUnitTests
         {
             Thread thread = new Thread(() =>
             {
-                ServiceContainer container = new ServiceContainer().RegisterNavigation<ExampleWindow, IExampleViewModel>(typeof(ExampleWindow).Assembly);
+                ServiceContainer container = new ServiceContainer().RegisterNavigation<ExampleWindow, IExampleViewModel>();
                 container.RegisterAssembly(typeof(INavigateViewModel).Assembly);
 
                 Assert.DoesNotThrow(() => container.GetInstance<INavigationService>());

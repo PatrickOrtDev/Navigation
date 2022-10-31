@@ -11,11 +11,7 @@ namespace Navigation
         public void Compose(IServiceRegistry serviceRegistry)
         {
             //MainWindow
-            // Alle ViewModels mit dem Typen INavigateViewModel aus der übergebenden Assambly registrieren
-            //serviceRegistry.RegisterAssembly(typeof(IViewModelBase), (serviceType, implementigType) => serviceType.IsInstanceOfType(typeof(INavigateViewModel)));
 
-            //Registriere die Services und Stores
-            //serviceRegistry.RegisterTransient(typeof(IViewModelFactory<>), typeof(ViewModelFactory<>));
             serviceRegistry.Register<Func<Type, INavigateViewModel>>((factory) => (type) => (INavigateViewModel)factory.GetInstance(type));
 
             serviceRegistry.RegisterSingleton<INavigationStore, NavigationStore>();

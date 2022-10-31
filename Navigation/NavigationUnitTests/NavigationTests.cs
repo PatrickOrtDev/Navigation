@@ -25,12 +25,13 @@ namespace NavigationUnitTests
         {
             ServiceContainer container = new ServiceContainer();
             //default from Assembly
-            container.RegisterNavigation<ExampleWindow, IExampleViewModel>(typeof(ExampleWindow).Assembly);
-            container.RegisterSingleton<INavigationStore, NavigationStore>();
-            container.RegisterSingleton<INavigationService, Navigation.Services.NavigationService>();
-            container.RegisterSingleton<IModalNavigationStore, ModalNavigationStore>();
-            //container.RegisterSingleton(typeof(IViewModelFactory<>), typeof(ViewModelFactory<>));
+            //container.RegisterNavigation<ExampleWindow, IExampleViewModel>(typeof(ExampleWindow).Assembly);
+            //container.RegisterSingleton<INavigationStore, NavigationStore>();
+            //container.RegisterSingleton<INavigationService, Navigation.Services.NavigationService>();
+            //container.RegisterSingleton<IModalNavigationStore, ModalNavigationStore>();
 
+            container.RegisterAssembly(typeof(INavigationService).Assembly);
+            container.RegisterNavigation<ExampleWindow, IExampleViewModel>();
             ExampleViewModel exampleViewModel;
 
             exampleViewModel = (ExampleViewModel)container.GetInstance<ExampleWindow>().DataContext;
