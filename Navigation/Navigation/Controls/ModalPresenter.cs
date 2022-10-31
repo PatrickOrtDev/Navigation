@@ -5,19 +5,19 @@ using System.Windows.Media;
 namespace Navigation.Controls
 {
     /// <summary>
-    /// Ein Control welches modal eine View anzeigt
+    /// A control that modally displays a view
     /// </summary>
     public class ModalPresenter : ContentControl
     {
         /// <summary>
-        /// Bestimmt ob eine modale View angezeigt wird
+        /// Determines whether a modal view is displayed
         /// </summary>
         public static readonly DependencyProperty IsOpenProperty =
            DependencyProperty.Register("IsOpen", typeof(bool), typeof(ModalPresenter),
                new PropertyMetadata(false));
 
         /// <summary>
-        /// Ein Control welches modal eine View anzeigt
+        /// A control that modally presents a view.
         /// </summary>
         static ModalPresenter()
         {
@@ -26,7 +26,7 @@ namespace Navigation.Controls
         }
 
         /// <summary>
-        /// Bestimmt ob eine modale View angezeigt wird
+        /// Determines whether a modal view is displayed.
         /// </summary>
         public bool IsOpen
         {
