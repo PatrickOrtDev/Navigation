@@ -23,31 +23,35 @@ namespace NavigationUnitTests
         [Test]
         public void NavigateToViewModelCorrectly()
         {
-            ServiceContainer container = new ServiceContainer();
-            container.RegisterNavigation<MainExampleWindow, IMainExampleViewModel>();
+            using (ServiceContainer container = new ServiceContainer())
+            {
+                container.RegisterNavigation<MainExampleWindow, IMainExampleViewModel>();
 
-            var mainViewModel = (MainExampleViewModel)container.GetInstance<MainExampleWindow>().DataContext;
+                var mainViewModel = (MainExampleViewModel)container.GetInstance<MainExampleWindow>().DataContext;
 
-            mainViewModel.NavigationService.Open<IFirstViewModel>();
-            Assert.IsInstanceOf<FirstViewModel>(mainViewModel.ViewModel);
+                mainViewModel.NavigationService.Open<IFirstViewModel>();
+                Assert.IsInstanceOf<FirstViewModel>(mainViewModel.ViewModel);
 
-            mainViewModel.NavigationService.Open<ISecondViewModel>();
-            Assert.IsInstanceOf<SecondViewModel>(mainViewModel.ViewModel);
+                mainViewModel.NavigationService.Open<ISecondViewModel>();
+                Assert.IsInstanceOf<SecondViewModel>(mainViewModel.ViewModel);
 
-            mainViewModel.NavigationService.Open<IFirstViewModel>();
-            Assert.IsInstanceOf<FirstViewModel>(mainViewModel.ViewModel);
+                mainViewModel.NavigationService.Open<IFirstViewModel>();
+                Assert.IsInstanceOf<FirstViewModel>(mainViewModel.ViewModel);
+            }
         }
 
         [Apartment(ApartmentState.STA)]
         [Test]
         public void RegisterAndResolveMainViewModelAndWindwoCorrectly()
         {
-            ServiceContainer container = new ServiceContainer();
-            container.RegisterNavigation<MainExampleWindow, IMainExampleViewModel>();
+            using (ServiceContainer container = new ServiceContainer())
+            {
+                container.RegisterNavigation<MainExampleWindow, IMainExampleViewModel>();
 
-            Assert.IsInstanceOf<MainExampleWindow>(container.GetInstance<MainExampleWindow>());
-            Assert.IsInstanceOf<MainExampleViewModel>(container.GetInstance<MainExampleWindow>().DataContext);
-            Assert.DoesNotThrow(() => container.GetInstance<MainExampleWindow>().Show());
+                Assert.IsInstanceOf<MainExampleWindow>(container.GetInstance<MainExampleWindow>());
+                Assert.IsInstanceOf<MainExampleViewModel>(container.GetInstance<MainExampleWindow>().DataContext);
+                Assert.DoesNotThrow(() => container.GetInstance<MainExampleWindow>().Show());
+            }
         }
     }
 }
