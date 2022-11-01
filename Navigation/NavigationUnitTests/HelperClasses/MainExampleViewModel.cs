@@ -7,7 +7,6 @@ namespace NavigationUnitTests.HelperClasses
     {
         public MainExampleViewModel(INavigationService navigationService, INavigationStore navigationStore, IModalNavigationStore modalNavigationStore)
         {
-            //Als Start (Main) hat er nur ViewModels unter sich und braucht keinen Service zum wechseln
             NavigationService = navigationService;
             _navigationStore = navigationStore;
             _modalNavigationStore = modalNavigationStore;
@@ -22,7 +21,7 @@ namespace NavigationUnitTests.HelperClasses
             throw new NotImplementedException();
         }
 
-        private IModalNavigationStore _modalNavigationStore;
-        private INavigationStore _navigationStore;
+        private readonly IModalNavigationStore _modalNavigationStore;
+        private readonly INavigationStore _navigationStore;
     }
 }
