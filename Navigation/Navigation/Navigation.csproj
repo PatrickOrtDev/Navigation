@@ -7,9 +7,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <PackageId>POD.Navigation</PackageId>
-    <Authors>Patrick Ort Dev</Authors>
+    <Authors>Patrick Ortmann</Authors>
     <Description>A Navigation service that allows navigating to ViewModels.</Description>
-    <PackageTags>navigation c# wpf mvvm</PackageTags>
+    <PackageTags>navigation csharp wpf mvvm</PackageTags>
     <PackageProjectUrl>https://github.com/PatrickOrtDev/Navigation</PackageProjectUrl>
     <RepositoryUrl>https://github.com/PatrickOrtDev/Navigation</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
