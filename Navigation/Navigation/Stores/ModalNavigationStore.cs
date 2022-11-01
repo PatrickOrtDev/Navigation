@@ -1,5 +1,4 @@
 ﻿using Navigation.Interfaces;
-using Navigation.ViewModels;
 using System;
 
 namespace Navigation.Stores
@@ -7,10 +6,11 @@ namespace Navigation.Stores
     /// <inheritdoc/>
     public sealed class ModalNavigationStore : IModalNavigationStore
     {
-        private ViewModelBase _currentViewModel;
+        /// <inheritdoc/>
+        public event Action? CurrentViewModelChanged;
 
         /// <inheritdoc/>
-        public ViewModelBase CurrentViewModel
+        public INavigateViewModel? CurrentViewModel
         {
             get => _currentViewModel;
             set
@@ -25,13 +25,12 @@ namespace Navigation.Stores
         public bool IsOpen => CurrentViewModel != null;
 
         /// <inheritdoc/>
-        public event Action CurrentViewModelChanged;
-
-        /// <inheritdoc/>
         public void Close()
         {
             CurrentViewModel = null;
         }
+
+        private INavigateViewModel? _currentViewModel;
 
         private void OnCurrentViewModelChanged()
         {

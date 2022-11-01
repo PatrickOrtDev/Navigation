@@ -1,31 +1,30 @@
-﻿using Navigation.ViewModels;
-using System;
+﻿using System;
 
 namespace Navigation.Interfaces
 {
     /// <summary>
-    /// Managed die modale Navigation von Views
+    /// Stores the active modal navigation ViewModel
     /// </summary>
     public interface IModalNavigationStore
     {
         /// <summary>
-        /// Das aktuelle ViewModel
+        /// Triggered if the current ViewModel changes.
         /// </summary>
-        public ViewModelBase CurrentViewModel { get; set; }
+        public event Action CurrentViewModelChanged;
 
         /// <summary>
-        /// Gibt an ob eine modale View geöffnet ist
+        /// The current ViewModel
+        /// </summary>
+        public INavigateViewModel? CurrentViewModel { get; set; }
+
+        /// <summary>
+        /// Indicates whether a modal view is open.
         /// </summary>
         public bool IsOpen { get; }
 
         /// <summary>
-        /// Schließt die modale View
+        /// Closes the modal view
         /// </summary>
         public void Close();
-
-        /// <summary>
-        /// Wird ausgelößt, falls das aktuelle ViewModel sich ändert
-        /// </summary>
-        public event Action CurrentViewModelChanged;
     }
 }

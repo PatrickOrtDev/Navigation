@@ -1,16 +1,18 @@
-﻿using Navigation.ViewModels;
-
-namespace Navigation.Interfaces
+﻿namespace Navigation.Interfaces
 {
     /// <summary>
-    /// Ein Service der zur Navigation verwendet wird
+    /// A service that is used for navigation
     /// </summary>
     public interface INavigationService
     {
         /// <summary>
-        /// Öffnet das ViewModel <typeparamref name="TViewModel"/> als View
+        /// Opens the ViewModel <typeparamref name="TViewModel"/> as a view.
         /// </summary>
-        /// <typeparam name="TViewModel">Das ViewModel das geöffnet werde soll</typeparam>
-        public void Open<TViewModel>() where TViewModel : ViewModelBase;
+        /// <typeparam name="TViewModel">The ViewModel to be opened</typeparam>
+        public void Open<TViewModel>()
+        where TViewModel : INavigateViewModel;
+
+        public void OpenModal<TViewModel>()
+            where TViewModel : INavigateViewModel;
     }
 }

@@ -8,7 +8,7 @@
   <PropertyGroup>
     <PackageId>POD.Navigation</PackageId>
     <Authors>Patrick Ort Dev</Authors>
-    <Description>A Navigationservice that allows navigating to ViewModels.</Description>
+    <Description>A Navigation service that allows navigating to ViewModels.</Description>
     <PackageTags>navigation c# wpf mvvm</PackageTags>
     <PackageProjectUrl>https://github.com/PatrickOrtDev/Navigation</PackageProjectUrl>
     <RepositoryUrl>https://github.com/PatrickOrtDev/Navigation</RepositoryUrl>
@@ -16,9 +16,13 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Interfaces\IModalNavigationService.cs" />
+    <Compile Remove="Services\ModalNavigationService.cs" />
+  </ItemGroup>
 	
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
+    <PackageReference Include="LightInject" Version="6.6.1" />
   </ItemGroup>
 
 </Project>

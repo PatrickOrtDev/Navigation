@@ -1,28 +1,20 @@
-﻿using Navigation.Interfaces;
-using Navigation.ViewModels;
+﻿using LightInject;
 using Microsoft.Extensions.DependencyInjection;
+using Navigation.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Navigation.Services
 {
     /// <inheritdoc/>
-    public class ModalNavigationService : IModalNavigationService
+    public sealed class ModalNavigationService : IModalNavigationService
     {
-        private readonly IModalNavigationStore _navigationStore;
-        private readonly IServiceProvider _service;
-
         /// <inheritdoc/>
-        public ModalNavigationService(IModalNavigationStore navigationStore, IServiceProvider service)
+        public ModalNavigationService(IModalNavigationStore navigationStore, IEnumerable<Lazy<INavigateViewModel>> serviceProvider)
         {
             _navigationStore = navigationStore;
-            _service = service;
-
-        }
-
-        /// <inheritdoc/>
-        public void Open<TViewModel>() where TViewModel : ViewModelBase
-        {
-            _navigationStore.CurrentViewModel = _service.GetRequiredService<TViewModel>();
+            _serviceProvider = serviceProvider;
         }
 
         /// <inheritdoc/>
@@ -30,5 +22,14 @@ namespace Navigation.Services
         {
             _navigationStore.Close();
         }
+
+        /// <inheritdoc/>
+        public void Open<TViewModel>() where TViewModel : INavigateViewModel
+        {
+            _navigationStore.CurrentViewModel = (INavigateViewModel?)_serviceProvider.Single(viewModel => viewModel.Value.GetType().Equals(typeof(TViewModel)));
+        }
+
+        private readonly IModalNavigationStore _navigationStore;
+        private readonly IEnumerable<Lazy<INavigateViewModel>> _serviceProvider;
     }
 }

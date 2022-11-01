@@ -1,21 +1,19 @@
-﻿using Navigation.ViewModels;
-
-namespace Navigation.Interfaces
+﻿namespace Navigation.Interfaces
 {
     /// <summary>
-    /// Ein Service der zur modalen Navigation verwendet wird
+    /// A service used for modal navigation
     /// </summary>
     public interface IModalNavigationService
     {
         /// <summary>
-        /// Öffnet das ViewModel <typeparamref name="TViewModel"/> als modale View
-        /// </summary>
-        /// <typeparam name="TViewModel">Das ViewModel das geöffnet werde soll</typeparam>
-        public void Open<TViewModel>() where TViewModel : ViewModelBase;
-
-        /// <summary>
-        /// Schließt die modale View
+        /// Closes the modal view
         /// </summary>
         public void CloseModal();
+
+        /// <summary>
+        /// Opens the ViewModel <typeparamref name="TViewModel"/> as a modal view.
+        /// </summary>
+        /// <typeparam name="TViewModel">The ViewModel to open</typeparam>.
+        public void Open<TViewModel>() where TViewModel : INavigateViewModel;
     }
 }

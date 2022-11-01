@@ -1,28 +1,38 @@
 ﻿using Navigation.Interfaces;
-using Navigation.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace Navigation.Services
 {
     /// <inheritdoc/>
-    public class NavigationService : INavigationService
+    public sealed class NavigationService : INavigationService
     {
-        private readonly INavigationStore _navigationStore;
-        private readonly IServiceProvider _service;
-
         /// <inheritdoc/>
-        public NavigationService(INavigationStore navigationStore, IServiceProvider service)
+        public NavigationService(INavigationStore navigationStore, IModalNavigationStore modalNavigationStore, Func<Type, INavigateViewModel> viewModelFactory)
         {
             _navigationStore = navigationStore;
-            _service = service;
-
+            _modalNavigationStore = modalNavigationStore;
+            _viewModelFactory = viewModelFactory;
         }
 
         /// <inheritdoc/>
-        public void Open<TViewModel>() where TViewModel : ViewModelBase
+        public void Open<TViewModel>()
+            where TViewModel : INavigateViewModel
         {
-            _navigationStore.CurrentViewModel = _service.GetRequiredService<TViewModel>();
+            var viewModel = _viewModelFactory(typeof(TViewModel));
+
+            _navigationStore.CurrentViewModel = viewModel;
         }
+
+        public void OpenModal<TViewModel>()
+            where TViewModel : INavigateViewModel
+        {
+            var viewModel = _viewModelFactory(typeof(TViewModel));
+
+            _modalNavigationStore.CurrentViewModel = viewModel;
+        }
+
+        private readonly IModalNavigationStore _modalNavigationStore;
+        private readonly INavigationStore _navigationStore;
+        private readonly Func<Type, INavigateViewModel> _viewModelFactory;
     }
 }
