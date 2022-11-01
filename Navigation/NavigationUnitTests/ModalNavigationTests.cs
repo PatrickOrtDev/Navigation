@@ -14,19 +14,18 @@ namespace NavigationUnitTests
         public void NavigateToViewModelCorrectly()
         {
             ServiceContainer container = new ServiceContainer();
-                container.RegisterNavigation<MainExampleWindow, IMainExampleViewModel>();
+            container.RegisterNavigation<MainExampleWindow, IMainExampleViewModel>();
 
-                var mainViewModel = (MainExampleViewModel)container.GetInstance<MainExampleWindow>().DataContext;
+            var mainViewModel = (MainExampleViewModel)container.GetInstance<MainExampleWindow>().DataContext;
 
-                mainViewModel.NavigationService.OpenModal<IFirstViewModel>();
-                Assert.IsInstanceOf<FirstViewModel>(mainViewModel.ModalViewModel);
+            mainViewModel.NavigationService.OpenModal<IFirstViewModel>();
+            Assert.IsInstanceOf<FirstViewModel>(mainViewModel.ModalViewModel);
 
-                mainViewModel.NavigationService.OpenModal<ISecondViewModel>();
-                Assert.IsInstanceOf<SecondViewModel>(mainViewModel.ModalViewModel);
+            mainViewModel.NavigationService.OpenModal<ISecondViewModel>();
+            Assert.IsInstanceOf<SecondViewModel>(mainViewModel.ModalViewModel);
 
-                mainViewModel.NavigationService.OpenModal<IFirstViewModel>();
-                Assert.IsInstanceOf<FirstViewModel>(mainViewModel.ModalViewModel);
-            
+            mainViewModel.NavigationService.OpenModal<IFirstViewModel>();
+            Assert.IsInstanceOf<FirstViewModel>(mainViewModel.ModalViewModel);
         }
 
         [TearDown]

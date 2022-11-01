@@ -1,10 +1,5 @@
-﻿using LightInject;
-using Navigation.Interfaces;
+﻿using Navigation.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NavigationUnitTests.HelperClasses
 {

@@ -1,5 +1,4 @@
-﻿using Navigation.Interfaces;
-using System.Windows;
+﻿using System.Windows;
 
 namespace NavigationUnitTests.HelperClasses
 {
