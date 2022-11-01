@@ -7,20 +7,19 @@ using NavigationUnitTests.HelperClasses;
 using NUnit.Framework;
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 
 namespace NavigationUnitTests
 {
-    [SingleThreadedAttribute]
     public class DIRegistrationTests
     {
         [Apartment(ApartmentState.STA)]
         [Test]
         public void RegisterAndResolveCompostionRootCorrectly()
         {
-            using (ServiceContainer container = new ServiceContainer())
-            {
-                container.RegisterFrom<CompostionRoot>();
+            ServiceContainer container = new ServiceContainer();
+ container.RegisterFrom<CompostionRoot>();
 
                 Assert.That(container, Is.Not.Null);
                 Assert.That(container.AvailableServices, Is.Not.Null);
@@ -29,15 +28,13 @@ namespace NavigationUnitTests
                 Assert.DoesNotThrow(() => container.GetInstance<INavigationService>());
                 Assert.DoesNotThrow(() => container.GetInstance<INavigationStore>());
                 Assert.DoesNotThrow(() => container.GetInstance<IModalNavigationStore>());
-            }
+            
         }
 
-        [STAThread]
         [Test]
         public void RegisterAndResolveRegisterNavigationCorrectly()
         {
-            using (ServiceContainer container = new ServiceContainer())
-            {
+            ServiceContainer container = new ServiceContainer();
                 container.RegisterNavigation<MainExampleWindow, IMainExampleViewModel>();
 
                 Assert.That(container, Is.Not.Null);
@@ -47,7 +44,17 @@ namespace NavigationUnitTests
                 Assert.DoesNotThrow(() => container.GetInstance<INavigationService>());
                 Assert.DoesNotThrow(() => container.GetInstance<INavigationStore>());
                 Assert.DoesNotThrow(() => container.GetInstance<IModalNavigationStore>());
-            }
+            
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            FieldInfo? field = typeof(ServiceContainerNavigationExtension).GetField("_mainViewModelIsSet",
+                            BindingFlags.Static |
+                            BindingFlags.NonPublic);
+
+            field?.SetValue(null, false);
         }
     }
 }
